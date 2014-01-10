@@ -11,6 +11,13 @@
 var fs = require('fs');
 var path = require('path');
 
+// Composite function to find all the files in a directory, and read their contents into memory.
+// The final result is loaded into an array, which is passed to "callback" on completion.
+// This shows how to use a callback "count" to understand when the entire process is completed (all files are loaded async in parallel)
+// And how to inform the caller (via the callback) when the entire process is done.
+// This provides the caller, a very simple API to make the request, and get a single notification when the whole thing is done!
+// Example usage:  loadDir("c:\\temp", function(err, results){console.log('Processed %d files', results.length);});
+
 function loadDir(directory, callback) {
     fs.readdir(directory, function onReaddir(err, files) {
         if (err) return callback(err);
